@@ -15,6 +15,13 @@ describe('./musicians endpoint', () => {
     test("testing that get/musicians returns correctly", async () => {
         const res = await request(app).get("/musicians");
         expect(res.statusCode).toBe(200);
-    })
-    
+    })  
+})
+
+describe('./bands endpoint', () => {
+    // Write your tests here
+    test("testing that get/bands returns correctly", async () => {
+        const res = await request(app).get("/bands");
+        expect(res.statusCode).toBe(200);
+    })  
 })
