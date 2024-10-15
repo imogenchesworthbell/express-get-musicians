@@ -1,50 +1,70 @@
 const express = require("express");
 const app = express();
-const { Musician, Band } = require("../models/index")
-const { db } = require("../db/connection")
+const { Musician, Band } = require("../models/index");
+const { db } = require("../db/connection");
 
 const port = 3000;
 
-//TODO: Create a GET /musicians route to return all musicians 
+//TODO: Create a GET /musicians route to return all musicians
+app.use(express.json());
+app.use(express.urlencoded());
 
-app.get('/musicians', async (req, res)=>{
-    const allMusicians = await Musician.findAll({})
-    res.json(allMusicians)
-})
+app.get("/musicians", async (req, res) => {
+  const allMusicians = await Musician.findAll({});
+  res.json(allMusicians);
+});
 
-app.get('/musicians/1', async (req, res)=>{
-    const firstMusician = await Musician.findByPk(1)
-    res.json(firstMusician)
-})
+app.get("/musicians/:id", async (req, res) => {
+  const number = req.params.id;
+  const musicianById = await Musician.findByPk(number);
+  res.json(musicianById);
+});
 
-app.get('/musicians/2', async (req, res)=>{
-    const secondMusician = await Musician.findByPk(2)
-    res.json(secondMusician)
-})
+app.post("/musicians", async (req, res) => {
+  const newMusician = await Musician.create(req.body);
+  res.json(newMusician);
+});
 
-app.get('/musicians/3', async (req, res)=>{
-    const thirdMusician = await Musician.findByPk(3)
-    res.json(thirdMusician)
-})
+app.put("/musicians/:id", async (req, res) => {
+  const updateMusician = await Musician.update(req.body, {
+    where: { id: req.params.id },
+  });
+  res.json(updateMusician);
+});
 
-app.get('/bands', async (req, res)=>{
-    const allBands = await Band.findAll({})
-    res.json(allBands)
-})
+app.delete("/musicians/:id", async (req, res) => {
+  const deletedMusician = await Musician.destroy({
+    where: { id: req.params.id },
+  });
+  res.json(deletedMusician);
+});
 
-app.get('/bands/1', async (req, res)=>{
-    const firstBand = await Band.findByPk(1)
-    res.json(firstBand)
-})
+app.get("/bands", async (req, res) => {
+  const allBands = await Band.findAll({});
+  res.json(allBands);
+});
 
-app.get('/bands/2', async (req, res)=>{
-    const secondBand = await Band.findByPk(2)
-    res.json(secondBand)
-})
+app.get("/bands/:id", async (req, res) => {
+  const number = req.params.id;
+  const bandById = await Band.findByPk(number);
+  res.json(bandById);
+});
 
-app.get('/bands/3', async (req, res)=>{
-    const thirdBand = await Band.findByPk(3)
-    res.json(thirdBand)
-})
+app.post("/bands", async (req, res) => {
+  const newBand = await Band.create(req.body);
+  res.json(newBand);
+});
+
+app.put("/bands/:id", async (req, res) => {
+  const updatedBand = await Band.update(req.body, {
+    where: { id: req.params.id },
+  });
+  res.json(updatedBand);
+});
+
+app.delete("/bands/:id", async (req, res) => {
+  const deletedBand = await Band.destroy({ where: { id: req.params.id } });
+  res.json(deletedBand);
+});
 
 module.exports = app;
