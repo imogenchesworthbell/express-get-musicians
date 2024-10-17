@@ -6,3 +6,4 @@ app.listen(port, () => {
     db.sync();
     console.log(`Listening at http://localhost:${port}/musicians`)
 })
+
